@@ -16,6 +16,7 @@
 		A4A2F3AF1B9FA5B200B0A087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4A2F3AD1B9FA5B200B0A087 /* LaunchScreen.storyboard */; };
 		A4A2F3BA1B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3B91B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift */; };
 		A4A2F3C51B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */; };
+		A4A2F3D41B9FA6D900B0A087 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		A4A2F3C01B9FA5B200B0A087 /* Sample Core Data AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample Core Data AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Core_Data_AppUITests.swift; sourceTree = "<group>"; };
 		A4A2F3C61B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample Core Data App.entitlements"; sourceTree = "<group>"; };
+		A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 		A4A2F39E1B9FA5B100B0A087 /* Sample Core Data App */ = {
 			isa = PBXGroup;
 			children = (
+				A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */,
+				A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */,
 				A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */,
 				A4A2F3A41B9FA5B200B0A087 /* MasterViewController.swift */,
 				A4A2F3A61B9FA5B200B0A087 /* DetailViewController.swift */,
@@ -198,6 +203,15 @@
 				TargetAttributes = {
 					A4A2F39B1B9FA5B100B0A087 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = HHWT75NS6T;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					A4A2F3B41B9FA5B200B0A087 = {
 						CreatedOnToolsVersion = 7.0;
@@ -264,6 +278,7 @@
 				A4A2F3A31B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld in Sources */,
 				A4A2F3A01B9FA5B200B0A087 /* AppDelegate.swift in Sources */,
 				A4A2F3A51B9FA5B200B0A087 /* MasterViewController.swift in Sources */,
+				A4A2F3D41B9FA6D900B0A087 /* CoreDataStackManager.swift in Sources */,
 				A4A2F3A71B9FA5B200B0A087 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,10 +421,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Sample Core Data App/Sample Core Data App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Sample Core Data App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.ossh.Sample-Core-Data-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -417,10 +436,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Sample Core Data App/Sample Core Data App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Sample Core Data App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.ossh.Sample-Core-Data-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -491,6 +514,7 @@
 				A4A2F3CB1B9FA5B200B0A087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4A2F3CC1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +523,7 @@
 				A4A2F3CE1B9FA5B200B0A087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4A2F3CF1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppUITests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +532,7 @@
 				A4A2F3D11B9FA5B200B0A087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
