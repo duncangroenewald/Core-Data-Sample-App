@@ -17,6 +17,7 @@
 		A4A2F3BA1B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3B91B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift */; };
 		A4A2F3C51B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */; };
 		A4A2F3D41B9FA6D900B0A087 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */; settings = {ASSET_TAGS = (); }; };
+		A4A2F3D61B9FA83100B0A087 /* FileRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		A4A2F3C61B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample Core Data App.entitlements"; sourceTree = "<group>"; };
 		A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRepresentation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 		A4A2F39E1B9FA5B100B0A087 /* Sample Core Data App */ = {
 			isa = PBXGroup;
 			children = (
+				A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */,
 				A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */,
 				A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */,
 				A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */,
@@ -275,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4A2F3D61B9FA83100B0A087 /* FileRepresentation.swift in Sources */,
 				A4A2F3A31B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld in Sources */,
 				A4A2F3A01B9FA5B200B0A087 /* AppDelegate.swift in Sources */,
 				A4A2F3A51B9FA5B200B0A087 /* MasterViewController.swift in Sources */,
