@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A42216DA1BA0580900BA9320 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A42216D91BA0580900BA9320 /* Settings.bundle */; settings = {ASSET_TAGS = (); }; };
 		A4A2F3A01B9FA5B200B0A087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */; };
 		A4A2F3A31B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3A11B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld */; };
 		A4A2F3A51B9FA5B200B0A087 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3A41B9FA5B200B0A087 /* MasterViewController.swift */; };
@@ -38,7 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A4A2F39C1B9FA5B100B0A087 /* Sample Core Data App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample Core Data App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A42216D91BA0580900BA9320 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A4A2F39C1B9FA5B100B0A087 /* Sample Core Data iOS App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample Core Data iOS App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4A2F3A21B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sample_Core_Data_App.xcdatamodel; sourceTree = "<group>"; };
 		A4A2F3A41B9FA5B200B0A087 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -47,10 +49,10 @@
 		A4A2F3AB1B9FA5B200B0A087 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4A2F3AE1B9FA5B200B0A087 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4A2F3B01B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A4A2F3B51B9FA5B200B0A087 /* Sample Core Data AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample Core Data AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4A2F3B51B9FA5B200B0A087 /* Sample Core Data iOS AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample Core Data iOS AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A2F3B91B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Core_Data_AppTests.swift; sourceTree = "<group>"; };
 		A4A2F3BB1B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A4A2F3C01B9FA5B200B0A087 /* Sample Core Data AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample Core Data AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4A2F3C01B9FA5B200B0A087 /* Sample Core Data iOS AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sample Core Data iOS AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Core_Data_AppUITests.swift; sourceTree = "<group>"; };
 		A4A2F3C61B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample Core Data App.entitlements"; sourceTree = "<group>"; };
@@ -86,7 +88,7 @@
 		A4A2F3931B9FA5B100B0A087 = {
 			isa = PBXGroup;
 			children = (
-				A4A2F39E1B9FA5B100B0A087 /* Sample Core Data App */,
+				A4A2F39E1B9FA5B100B0A087 /* Sample Core Data iOS App */,
 				A4A2F3B81B9FA5B200B0A087 /* Sample Core Data AppTests */,
 				A4A2F3C31B9FA5B200B0A087 /* Sample Core Data AppUITests */,
 				A4A2F39D1B9FA5B100B0A087 /* Products */,
@@ -96,16 +98,17 @@
 		A4A2F39D1B9FA5B100B0A087 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A4A2F39C1B9FA5B100B0A087 /* Sample Core Data App.app */,
-				A4A2F3B51B9FA5B200B0A087 /* Sample Core Data AppTests.xctest */,
-				A4A2F3C01B9FA5B200B0A087 /* Sample Core Data AppUITests.xctest */,
+				A4A2F39C1B9FA5B100B0A087 /* Sample Core Data iOS App.app */,
+				A4A2F3B51B9FA5B200B0A087 /* Sample Core Data iOS AppTests.xctest */,
+				A4A2F3C01B9FA5B200B0A087 /* Sample Core Data iOS AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A4A2F39E1B9FA5B100B0A087 /* Sample Core Data App */ = {
+		A4A2F39E1B9FA5B100B0A087 /* Sample Core Data iOS App */ = {
 			isa = PBXGroup;
 			children = (
+				A42216D91BA0580900BA9320 /* Settings.bundle */,
 				A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */,
 				A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */,
 				A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */,
@@ -118,6 +121,7 @@
 				A4A2F3B01B9FA5B200B0A087 /* Info.plist */,
 				A4A2F3A11B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld */,
 			);
+			name = "Sample Core Data iOS App";
 			path = "Sample Core Data App";
 			sourceTree = "<group>";
 		};
@@ -142,9 +146,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A4A2F39B1B9FA5B100B0A087 /* Sample Core Data App */ = {
+		A4A2F39B1B9FA5B100B0A087 /* Sample Core Data iOS App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4A2F3C91B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data App" */;
+			buildConfigurationList = A4A2F3C91B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS App" */;
 			buildPhases = (
 				A4A2F3981B9FA5B100B0A087 /* Sources */,
 				A4A2F3991B9FA5B100B0A087 /* Frameworks */,
@@ -154,14 +158,14 @@
 			);
 			dependencies = (
 			);
-			name = "Sample Core Data App";
+			name = "Sample Core Data iOS App";
 			productName = "Sample Core Data App";
-			productReference = A4A2F39C1B9FA5B100B0A087 /* Sample Core Data App.app */;
+			productReference = A4A2F39C1B9FA5B100B0A087 /* Sample Core Data iOS App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A4A2F3B41B9FA5B200B0A087 /* Sample Core Data AppTests */ = {
+		A4A2F3B41B9FA5B200B0A087 /* Sample Core Data iOS AppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4A2F3CC1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppTests" */;
+			buildConfigurationList = A4A2F3CC1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS AppTests" */;
 			buildPhases = (
 				A4A2F3B11B9FA5B200B0A087 /* Sources */,
 				A4A2F3B21B9FA5B200B0A087 /* Frameworks */,
@@ -172,14 +176,14 @@
 			dependencies = (
 				A4A2F3B71B9FA5B200B0A087 /* PBXTargetDependency */,
 			);
-			name = "Sample Core Data AppTests";
+			name = "Sample Core Data iOS AppTests";
 			productName = "Sample Core Data AppTests";
-			productReference = A4A2F3B51B9FA5B200B0A087 /* Sample Core Data AppTests.xctest */;
+			productReference = A4A2F3B51B9FA5B200B0A087 /* Sample Core Data iOS AppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A4A2F3BF1B9FA5B200B0A087 /* Sample Core Data AppUITests */ = {
+		A4A2F3BF1B9FA5B200B0A087 /* Sample Core Data iOS AppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A4A2F3CF1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppUITests" */;
+			buildConfigurationList = A4A2F3CF1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS AppUITests" */;
 			buildPhases = (
 				A4A2F3BC1B9FA5B200B0A087 /* Sources */,
 				A4A2F3BD1B9FA5B200B0A087 /* Frameworks */,
@@ -190,9 +194,9 @@
 			dependencies = (
 				A4A2F3C21B9FA5B200B0A087 /* PBXTargetDependency */,
 			);
-			name = "Sample Core Data AppUITests";
+			name = "Sample Core Data iOS AppUITests";
 			productName = "Sample Core Data AppUITests";
-			productReference = A4A2F3C01B9FA5B200B0A087 /* Sample Core Data AppUITests.xctest */;
+			productReference = A4A2F3C01B9FA5B200B0A087 /* Sample Core Data iOS AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -239,9 +243,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A4A2F39B1B9FA5B100B0A087 /* Sample Core Data App */,
-				A4A2F3B41B9FA5B200B0A087 /* Sample Core Data AppTests */,
-				A4A2F3BF1B9FA5B200B0A087 /* Sample Core Data AppUITests */,
+				A4A2F39B1B9FA5B100B0A087 /* Sample Core Data iOS App */,
+				A4A2F3B41B9FA5B200B0A087 /* Sample Core Data iOS AppTests */,
+				A4A2F3BF1B9FA5B200B0A087 /* Sample Core Data iOS AppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A42216DA1BA0580900BA9320 /* Settings.bundle in Resources */,
 				A4A2F3AF1B9FA5B200B0A087 /* LaunchScreen.storyboard in Resources */,
 				A4A2F3AC1B9FA5B200B0A087 /* Assets.xcassets in Resources */,
 				A4A2F3AA1B9FA5B200B0A087 /* Main.storyboard in Resources */,
@@ -308,12 +313,12 @@
 /* Begin PBXTargetDependency section */
 		A4A2F3B71B9FA5B200B0A087 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A4A2F39B1B9FA5B100B0A087 /* Sample Core Data App */;
+			target = A4A2F39B1B9FA5B100B0A087 /* Sample Core Data iOS App */;
 			targetProxy = A4A2F3B61B9FA5B200B0A087 /* PBXContainerItemProxy */;
 		};
 		A4A2F3C21B9FA5B200B0A087 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A4A2F39B1B9FA5B100B0A087 /* Sample Core Data App */;
+			target = A4A2F39B1B9FA5B100B0A087 /* Sample Core Data iOS App */;
 			targetProxy = A4A2F3C11B9FA5B200B0A087 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -511,7 +516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4A2F3C91B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data App" */ = {
+		A4A2F3C91B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4A2F3CA1B9FA5B200B0A087 /* Debug */,
@@ -520,7 +525,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4A2F3CC1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppTests" */ = {
+		A4A2F3CC1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS AppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4A2F3CD1B9FA5B200B0A087 /* Debug */,
@@ -529,7 +534,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A4A2F3CF1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data AppUITests" */ = {
+		A4A2F3CF1B9FA5B200B0A087 /* Build configuration list for PBXNativeTarget "Sample Core Data iOS AppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A4A2F3D01B9FA5B200B0A087 /* Debug */,
