@@ -1,5 +1,5 @@
 # Core-Data-Sample-App
-Sample Core Data Apps for iOS and OSX using Swift.
+Sample Core Data Apps for iOS and OSX using Swift. (see here for more details http://ossh.com.au/design-and-technology/software-development/sample-library-style-ios-core-data-app-with-icloud-integration/)
 
 After encountering many requests from app developers new to Core Data and iCloud for assistance I have finally decided to 
 create a repository for migrating the existing sample apps into.  My aim is to update the samples to be pure Swift 2.0 
