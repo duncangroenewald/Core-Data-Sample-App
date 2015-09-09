@@ -1,9 +1,10 @@
 //
 //  FileRepresentation.swift
-//  iWallet2
 //
 //  Created by Duncan Groenewald on 5/10/2014.
 //  Copyright (c) 2014 Duncan Groenewald. All rights reserved.
+//
+//  This class is used for iCloud MetaData Queries
 //
 
 import Foundation

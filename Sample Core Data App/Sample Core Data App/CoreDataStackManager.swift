@@ -84,19 +84,19 @@ class CoreDataStackManager: NSObject {
     // MARK: Types
     
     private struct Constants {
-        static let applicationDocumentsDirectoryName = "au.com.ossh.Info2"
-        static let iCloudContainerID = "iCloud.au.com.ossh.iWallet2"
+        static let applicationDocumentsDirectoryName = "au.com.ossh.Sample_Core_Data_App"
+        static let iCloudContainerID = "iCloud.au.com.ossh.Sample_Core_Data_App"
         static let errorDomain = "CoreDataStackManager"
-        static let modelName = "Info2"
+        static let modelName = "Sample_Core_Data_App"
         static let persistentStoreName = "persistentStore"
         static let iCloudPersistentStoreName = "persistentStore_ICLOUD"
-        static let storefileExtension = "iwallet_sqlite"
-        static let iCloudPreferenceKey = "au.com.ossh.Info2.UseICloudStorage"
-        static let iCloudPreferenceSelected = "au.com.ossh.Info2.iCloudStoragePreferenceSelected" // Records whether user has actually selected a preference
-        static let makeBackupPreferenceKey = "au.com.ossh.Info2.MakeBackup"
-        static let iCloudStoreFilenameKey = "au.com.ossh.Info2.iCloudStoreFileName"
-        static let ubiquityContainerKey = "au.com.ossh.Info2.ubiquityContainerID"
-        static let ubiquityTokenKey = "au.com.ossh.Info2.ubiquityToken"
+        static let storefileExtension = "sqlite"
+        static let iCloudPreferenceKey = "au.com.ossh.Sample_Core_Data_App.UseICloudStorage"
+        static let iCloudPreferenceSelected = "au.com.ossh.Sample_Core_Data_App.iCloudStoragePreferenceSelected" // Records whether user has actually selected a preference
+        static let makeBackupPreferenceKey = "au.com.ossh.Sample_Core_Data_App.MakeBackup"
+        static let iCloudStoreFilenameKey = "au.com.ossh.Sample_Core_Data_App.iCloudStoreFileName"
+        static let ubiquityContainerKey = "au.com.ossh.Sample_Core_Data_App.ubiquityContainerID"
+        static let ubiquityTokenKey = "au.com.ossh.Sample_Core_Data_App.ubiquityToken"
         static let timerPeriod: NSTimeInterval = 2.0
     }
     
@@ -164,7 +164,7 @@ class CoreDataStackManager: NSObject {
             FLOG(" Error getting managedObjectContext because persistentStoreCoordinator is nil")
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         // Set the MergePolicy to prioritise external inputs
         let mergePolicy = NSMergePolicy(mergeType:NSMergePolicyType.MergeByPropertyStoreTrumpMergePolicyType )
@@ -177,7 +177,6 @@ class CoreDataStackManager: NSObject {
     
     func saveContext () {
         if let moc = managedObjectContext {
-            var error: NSError? = nil
             
             if moc.hasChanges {
                 do {
@@ -215,8 +214,7 @@ class CoreDataStackManager: NSObject {
     func localStoreExists() -> Bool {
         
         //FLOG("localStoreExists called")
-        let exists = "exists"
-        let doesnotexist = "does not exist"
+        
         var isDir: ObjCBool = false
         
         
@@ -278,7 +276,7 @@ class CoreDataStackManager: NSObject {
         
         createFileQuery()
         
-        var fileManager: NSFileManager = NSFileManager.defaultManager()
+        let fileManager: NSFileManager = NSFileManager.defaultManager()
         
         let model: NSManagedObjectModel = managedObjectModel
         
@@ -330,8 +328,9 @@ class CoreDataStackManager: NSObject {
             }
             
             do {
-
-                let metaData: NSDictionary = try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(NSSQLiteStoreType, URL: storeURL!)
+                
+                let metaData: NSDictionary = NSDictionary()
+                try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(NSSQLiteStoreType, URL: storeURL!, options: metaData as [NSObject : AnyObject])
                 
                 let result: Bool = model.isConfiguration(nil, compatibleWithStoreMetadata: metaData as! [String : AnyObject] )
                 
@@ -409,11 +408,9 @@ class CoreDataStackManager: NSObject {
                     
                 }
                 
-                
-                var error: NSError? = nil
-                
+                let metaData: NSDictionary = NSDictionary()
                 do {
-                    let metaData: NSDictionary = try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(NSSQLiteStoreType, URL:storeURL!)
+                    try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(NSSQLiteStoreType, URL: storeURL!, options: metaData as [NSObject : AnyObject])
                     
                     let result: Bool = model.isConfiguration(nil, compatibleWithStoreMetadata:metaData as! [String : AnyObject])
                     
@@ -779,7 +776,7 @@ class CoreDataStackManager: NSObject {
             
             for document in docs {
                 
-                if let url = document as? NSURL {
+                let url = document
                     
                     if let name: NSString = url.lastPathComponent {
                         //FLOG(" local file = \(name)")
@@ -792,7 +789,7 @@ class CoreDataStackManager: NSObject {
                             
                         }
                     }
-                }
+                
             }
             
             let sortNameDescriptor: NSSortDescriptor = NSSortDescriptor.init(key:"path", ascending: false)
@@ -906,9 +903,8 @@ class CoreDataStackManager: NSObject {
         if let path = iCloudContainerURL()?.path {
             //FLOG("  icloudStoreURL is " + path)
             
-            var isDir: Bool = false
             
-            var fileExists: Bool = NSFileManager.defaultManager().fileExistsAtPath(path)
+            //var fileExists: Bool = NSFileManager.defaultManager().fileExistsAtPath(path)
             //FLOG("  iCloudStoreURL " + (fileExists ? "exists" : "does not exist"))
             
         } else {
@@ -927,7 +923,7 @@ class CoreDataStackManager: NSObject {
     // This function returns true if the user is logged in to iCloud, otherwise
     // it return false
     func isICloudContainerAvailable()->Bool {
-        if let currentToken = NSFileManager.defaultManager().ubiquityIdentityToken {
+        if let _ = NSFileManager.defaultManager().ubiquityIdentityToken {
             return true
         }
         else {
@@ -1041,21 +1037,21 @@ class CoreDataStackManager: NSObject {
         // Lets use the existing PSC
         let migrationPSC: NSPersistentStoreCoordinator  = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         
-        var error: NSError? = nil
+       
         
         // Open the store
         do {
-            let sourceStore: NSPersistentStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: localStoreURL(), options: (localStoreOptions() as! [NSObject : AnyObject]))
+            let sourceStore: NSPersistentStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: localStoreURL(), options: localStoreOptions() as [NSObject : AnyObject])
             
             
             //FLOG(" Successfully added store to migrate");
             
-            var error2: NSError? = nil
+            
             
             //FLOG(" About to migrate the store...");
             let migratedStore: NSPersistentStore?
             do {
-                migratedStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:backupStoreURL(), options:(localStoreOptions() as! [NSObject : AnyObject]), withType:NSSQLiteStoreType)
+                migratedStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:backupStoreURL(), options:(localStoreOptions() as [NSObject : AnyObject]), withType:NSSQLiteStoreType)
             } catch {
                 
                 migratedStore = nil
@@ -1095,18 +1091,17 @@ class CoreDataStackManager: NSObject {
         // Open the store
         do {
             let sourceStore: NSPersistentStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL: iCloudStoreURL(),
-                options: iCloudStoreOptions() as! [NSObject : AnyObject])
+                options: iCloudStoreOptions() as [NSObject : AnyObject])
                 
                 //FLOG(" Successfully added store to migrate");
-                
-                var error: NSError? = nil
+            
                 
                 //FLOG(" About to migrate the store...");
                 let migratedStore: NSPersistentStore?
                 do {
-                    migratedStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:backupStoreURL(), options:localStoreOptions() as! [NSObject : AnyObject], withType:NSSQLiteStoreType)
-                } catch var error1 as NSError {
-                    error = error1
+                    migratedStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:backupStoreURL(), options:localStoreOptions() as [NSObject : AnyObject], withType:NSSQLiteStoreType)
+                } catch let error as NSError {
+                    
                     migratedStore = nil
                 }
                 
@@ -1146,7 +1141,6 @@ class CoreDataStackManager: NSObject {
         
         isOpening = true
         
-        let error: NSError? = nil
         
         let aPersistentStoreCoordinator: NSPersistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
         
@@ -1201,7 +1195,7 @@ class CoreDataStackManager: NSObject {
                 
                 // Set the moc here because its defined as Lazy it may be initialised to nil already by
                 // something!
-                let newMoc = NSManagedObjectContext()
+                let newMoc = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
                 newMoc.persistentStoreCoordinator = persistentStoreCoordinator
                 // Set the MergePolicy to prioritise external inputs
                 let mergePolicy = NSMergePolicy(mergeType:NSMergePolicyType.MergeByPropertyStoreTrumpMergePolicyType )
@@ -1256,7 +1250,7 @@ class CoreDataStackManager: NSObject {
     func loadSeedData() {
         //FLOG(" called");
         
-        let bgContext:NSManagedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.ConfinementConcurrencyType)
+        let bgContext:NSManagedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
         
         // Register for saves in order to merge any data from background threads
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"storesDidSave:", name: NSManagedObjectContextDidSaveNotification, object:bgContext)
@@ -1505,7 +1499,7 @@ class CoreDataStackManager: NSObject {
         
         // Open the store
         do {
-            let sourceStore:NSPersistentStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:iCloudStoreURL(), options:iCloudStoreOptions() as! [NSObject : AnyObject])
+            let sourceStore:NSPersistentStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:iCloudStoreURL(), options:iCloudStoreOptions() as [NSObject : AnyObject])
             
             //FLOG(" Successfully added store to migrate");
             
@@ -1515,7 +1509,7 @@ class CoreDataStackManager: NSObject {
             //FLOG(" About to migrate the store...")
 
             do {
-                let migratedStore: NSPersistentStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:localStoreURL(), options:localStoreOptions() as! [NSObject : AnyObject], withType:NSSQLiteStoreType)
+                let migratedStore: NSPersistentStore = try migrationPSC.migratePersistentStore(sourceStore, toURL:localStoreURL(), options:localStoreOptions() as [NSObject : AnyObject], withType:NSSQLiteStoreType)
                 
                 moveSuccess = true
                 //FLOG("store successfully migrated")
@@ -1608,7 +1602,7 @@ class CoreDataStackManager: NSObject {
                 //FLOG("   ")
                 //FLOG("  ICLOUD DOCUMENTS (\(docs.count))")
                 //FLOG("  =====================")
-                for document in docs {
+                for _ in docs {
                     //FLOG("  \(document.lastPathComponent)")
                 }
                 //FLOG("   ")
@@ -2590,7 +2584,7 @@ class CoreDataStackManager: NSObject {
                                 try fm.copyItemAtPath(sourcePath,
                                                                 toPath:destPath)
                                 copySuccess = true
-                            } catch var error1 as NSError {
+                            } catch let error1 as NSError {
                                 error = error1
                                 copySuccess = false
                             } catch {
@@ -2976,7 +2970,7 @@ class CoreDataStackManager: NSObject {
         do {
             // Now delete the iCloud content and file
             try NSPersistentStoreCoordinator.removeUbiquitousContentAndPersistentStoreAtURL(iCloudStoreURL(),
-                        options:(iCloudStoreOptions() as! [NSObject : AnyObject]))
+                        options:(iCloudStoreOptions() as [NSObject : AnyObject]))
             // Now delete the iCloud content and file
             result = true
         } catch  {
@@ -3011,7 +3005,7 @@ class CoreDataStackManager: NSObject {
         // Open the existing local store using the original options
         let sourceStore: NSPersistentStore?
         do {
-            sourceStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:fileURL, options:(localStoreOptions() as! [NSObject : AnyObject]))
+            sourceStore = try migrationPSC.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:fileURL, options:(localStoreOptions() as [NSObject : AnyObject]))
         } catch _ {
             sourceStore = nil
         }
@@ -3032,7 +3026,7 @@ class CoreDataStackManager: NSObject {
             // Now migrate the store using the iCloud options
             let newStore:NSPersistentStore?
             do {
-                newStore = try migrationPSC.migratePersistentStore(sourceStore!, toURL:iCloudStoreURL(), options:(iCloudStoreOptions() as! [NSObject : AnyObject]), withType:NSSQLiteStoreType)
+                newStore = try migrationPSC.migratePersistentStore(sourceStore!, toURL:iCloudStoreURL(), options:(iCloudStoreOptions() as [NSObject : AnyObject]), withType:NSSQLiteStoreType)
             } catch  {
                 
                 newStore = nil
