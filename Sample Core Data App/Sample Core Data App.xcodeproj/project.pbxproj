@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A42216DA1BA0580900BA9320 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A42216D91BA0580900BA9320 /* Settings.bundle */; settings = {ASSET_TAGS = (); }; };
+		A429381C1BCD7C94000E8F98 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A429381B1BCD7C94000E8F98 /* SplitViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A42938221BCD89DF000E8F98 /* UpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42938211BCD89DF000E8F98 /* UpgradeViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A4308D521BCCF48000E12002 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4308D511BCCF48000E12002 /* CoreDataStackManager.swift */; settings = {ASSET_TAGS = (); }; };
+		A4308D551BCCF4CC00E12002 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4308D541BCCF4CC00E12002 /* StartViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A4308D571BCCF5C500E12002 /* SampleAppIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4308D561BCCF5C500E12002 /* SampleAppIcon.jpg */; settings = {ASSET_TAGS = (); }; };
 		A4A2F3A01B9FA5B200B0A087 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */; };
 		A4A2F3A31B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3A11B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld */; };
 		A4A2F3A51B9FA5B200B0A087 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3A41B9FA5B200B0A087 /* MasterViewController.swift */; };
@@ -17,7 +22,6 @@
 		A4A2F3AF1B9FA5B200B0A087 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4A2F3AD1B9FA5B200B0A087 /* LaunchScreen.storyboard */; };
 		A4A2F3BA1B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3B91B9FA5B200B0A087 /* Sample_Core_Data_AppTests.swift */; };
 		A4A2F3C51B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */; };
-		A4A2F3D41B9FA6D900B0A087 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */; settings = {ASSET_TAGS = (); }; };
 		A4A2F3D61B9FA83100B0A087 /* FileRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,11 @@
 
 /* Begin PBXFileReference section */
 		A42216D91BA0580900BA9320 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A429381B1BCD7C94000E8F98 /* SplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		A42938211BCD89DF000E8F98 /* UpgradeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeViewController.swift; sourceTree = "<group>"; };
+		A4308D511BCCF48000E12002 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStackManager.swift; path = Common/CoreDataStackManager.swift; sourceTree = "<group>"; };
+		A4308D541BCCF4CC00E12002 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		A4308D561BCCF5C500E12002 /* SampleAppIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = SampleAppIcon.jpg; path = Common/Images/SampleAppIcon.jpg; sourceTree = "<group>"; };
 		A4A2F39C1B9FA5B100B0A087 /* Sample Core Data iOS App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample Core Data iOS App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4A2F3A21B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sample_Core_Data_App.xcdatamodel; sourceTree = "<group>"; };
@@ -56,8 +65,7 @@
 		A4A2F3C41B9FA5B200B0A087 /* Sample_Core_Data_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample_Core_Data_AppUITests.swift; sourceTree = "<group>"; };
 		A4A2F3C61B9FA5B200B0A087 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample Core Data App.entitlements"; sourceTree = "<group>"; };
-		A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
-		A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRepresentation.swift; sourceTree = "<group>"; };
+		A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileRepresentation.swift; path = "Sample Core Data App/FileRepresentation.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,9 +93,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4308D531BCCF48500E12002 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A4308D561BCCF5C500E12002 /* SampleAppIcon.jpg */,
+				A4308D511BCCF48000E12002 /* CoreDataStackManager.swift */,
+				A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		A4A2F3931B9FA5B100B0A087 = {
 			isa = PBXGroup;
 			children = (
+				A4308D531BCCF48500E12002 /* Common */,
 				A4A2F39E1B9FA5B100B0A087 /* Sample Core Data iOS App */,
 				A4A2F3B81B9FA5B200B0A087 /* Sample Core Data AppTests */,
 				A4A2F3C31B9FA5B200B0A087 /* Sample Core Data AppUITests */,
@@ -109,10 +128,11 @@
 			isa = PBXGroup;
 			children = (
 				A42216D91BA0580900BA9320 /* Settings.bundle */,
-				A4A2F3D51B9FA83100B0A087 /* FileRepresentation.swift */,
-				A4A2F3D31B9FA6D900B0A087 /* CoreDataStackManager.swift */,
 				A4A2F3D21B9FA67D00B0A087 /* Sample Core Data App.entitlements */,
 				A4A2F39F1B9FA5B200B0A087 /* AppDelegate.swift */,
+				A429381B1BCD7C94000E8F98 /* SplitViewController.swift */,
+				A4308D541BCCF4CC00E12002 /* StartViewController.swift */,
+				A42938211BCD89DF000E8F98 /* UpgradeViewController.swift */,
 				A4A2F3A41B9FA5B200B0A087 /* MasterViewController.swift */,
 				A4A2F3A61B9FA5B200B0A087 /* DetailViewController.swift */,
 				A4A2F3A81B9FA5B200B0A087 /* Main.storyboard */,
@@ -258,6 +278,7 @@
 				A42216DA1BA0580900BA9320 /* Settings.bundle in Resources */,
 				A4A2F3AF1B9FA5B200B0A087 /* LaunchScreen.storyboard in Resources */,
 				A4A2F3AC1B9FA5B200B0A087 /* Assets.xcassets in Resources */,
+				A4308D571BCCF5C500E12002 /* SampleAppIcon.jpg in Resources */,
 				A4A2F3AA1B9FA5B200B0A087 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,11 +305,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4A2F3D61B9FA83100B0A087 /* FileRepresentation.swift in Sources */,
+				A4308D551BCCF4CC00E12002 /* StartViewController.swift in Sources */,
 				A4A2F3A31B9FA5B200B0A087 /* Sample_Core_Data_App.xcdatamodeld in Sources */,
 				A4A2F3A01B9FA5B200B0A087 /* AppDelegate.swift in Sources */,
+				A42938221BCD89DF000E8F98 /* UpgradeViewController.swift in Sources */,
 				A4A2F3A51B9FA5B200B0A087 /* MasterViewController.swift in Sources */,
-				A4A2F3D41B9FA6D900B0A087 /* CoreDataStackManager.swift in Sources */,
 				A4A2F3A71B9FA5B200B0A087 /* DetailViewController.swift in Sources */,
+				A4308D521BCCF48000E12002 /* CoreDataStackManager.swift in Sources */,
+				A429381C1BCD7C94000E8F98 /* SplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
