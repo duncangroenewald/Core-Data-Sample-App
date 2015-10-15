@@ -8,12 +8,13 @@
 
 import UIKit
 
-class SplitViewController: UISplitViewController {
+class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.delegate = self
         
         let navigationController = self.viewControllers[self.viewControllers.count-1] as! UINavigationController
         

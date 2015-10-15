@@ -37,7 +37,7 @@ import CoreData
     import Cocoa
 #endif
 
-var logLevel: Int = 3   // 0 = All, 5 = >=5
+var logLevel: Int = 0   // 0 = All, 5 = >=5
 
 func FLOG(message:String, file: String = __FILE__, method: String = __FUNCTION__, line: Int = __LINE__) {
     if (logLevel > 0) {
@@ -120,23 +120,22 @@ class CoreDataStackManager: NSObject {
     // MARK: Types
     
     private struct Constants {
-        static let applicationDocumentsDirectoryName = "au.com.ossh.Sample_Core_Data_App"
-        static let iCloudContainerID = "iCloud.au.com.ossh.Sample_Core_Data_App"
+        static let applicationDocumentsDirectoryName = "au.com.ossh.Info2"
+        static let iCloudContainerID = "iCloud.au.com.ossh.iWallet2"
         static let errorDomain = "CoreDataStackManager"
-        static let modelName = "Sample_Core_Data_App"
+        static let modelName = "Info2"
         static let persistentStoreName = "persistentStore"
         static let iCloudPersistentStoreName = "persistentStore_ICLOUD"
-        static let storefileExtension = "sqlite"
-        static let iCloudPreferenceKey = "au.com.ossh.Sample_Core_Data_App.UseICloudStorage"
-        static let iCloudPreferenceSelected = "au.com.ossh.Sample_Core_Data_App.iCloudStoragePreferenceSelected" // Records whether user has actually selected a preference
-        static let makeBackupPreferenceKey = "au.com.ossh.Sample_Core_Data_App.MakeBackup"
-        static let iCloudStoreFilenameKey = "au.com.ossh.Sample_Core_Data_App.iCloudStoreFileName"
-        static let ubiquityContainerKey = "au.com.ossh.Sample_Core_Data_App.ubiquityContainerID"
-        static let ubiquityTokenKey = "au.com.ossh.Sample_Core_Data_App.ubiquityToken"
+        static let storefileExtension = "iwallet_sqlite"
+        static let iCloudPreferenceKey = "au.com.ossh.Info2.UseICloudStorage"
+        static let iCloudPreferenceSelected = "au.com.ossh.Info2.iCloudStoragePreferenceSelected" // Records whether user has actually selected a preference
+        static let makeBackupPreferenceKey = "au.com.ossh.Info2.MakeBackup"
+        static let iCloudStoreFilenameKey = "au.com.ossh.Info2.iCloudStoreFileName"
+        static let ubiquityContainerKey = "au.com.ossh.Info2.ubiquityContainerID"
+        static let ubiquityTokenKey = "au.com.ossh.Info2.ubiquityToken"
         static let timerPeriod: NSTimeInterval = 2.0
     }
     
-        
     // MARK: Properties
     
     class var sharedManager: CoreDataStackManager {
@@ -523,7 +522,7 @@ class CoreDataStackManager: NSObject {
             return
         }
         
-        // Bug workaround - not a bug - we MUST make this call first to ensure things are initialised but 
+        // Bug workaround - not a bug - we MUST make this call first to ensure things are initialised but
         // we should only do so on  background thread !
         //DG This call needs to be moved to a background thread !
         let urlUC = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier((ubiquityContainerID as! String));
@@ -736,13 +735,13 @@ class CoreDataStackManager: NSObject {
                                         {
                                             notDownloaded = true
                                             
-                                                FLOG(5, message: " iCloud file \(filename) not downloaded")
+                                            FLOG(5, message: " iCloud file \(filename) not downloaded")
                                             
                                         }
                                         if (v.isEqualToString(NSMetadataUbiquitousItemDownloadingStatusCurrent)) {
                                             self.icloud_file_exists = true
                                             
-                                                FLOG(5, message: " iCloud file \(filename) exists")
+                                            FLOG(5, message: " iCloud file \(filename) exists")
                                             
                                         }
                                     }
@@ -844,7 +843,7 @@ class CoreDataStackManager: NSObject {
                 // post a notification that files have been updated
                 self.postFileUpdateNotification()
             } else {
-               FLOG(3, message: " Files have not changed")
+                FLOG(3, message: " Files have not changed")
             }
             
             // If some files have not synced then start the Query again
@@ -1081,10 +1080,10 @@ class CoreDataStackManager: NSObject {
     }
     
     /*! Returns the CoreData persistent store's directory in the ubiquity container.  Note that Core Data
-        creates a directory in the iCLoud container for each Core Data Store using the iCloud name given to
-        createPersistentStore API
+    creates a directory in the iCLoud container for each Core Data Store using the iCloud name given to
+    createPersistentStore API
     
-        @returns The URL for the CoreData directory in ubiquity container
+    @returns The URL for the CoreData directory in ubiquity container
     */
     func iCloudContainerURL()->NSURL? {
         
@@ -1131,49 +1130,49 @@ class CoreDataStackManager: NSObject {
     func doesICloudFileExist()->Bool {
         FLOG(5, message: " called")
         
-#if os(iOS)
-        var count: Int  = 0
-        
-        // Start with 10ms time boxes
-        let ti: NSTimeInterval  = 2.0
-        
-        // Wait until delegate did callback
-        while (!has_checked_cloud) {
-            //FLOG(5, message: " has not checked iCloud yet, waiting")
+        #if os(iOS)
+            var count: Int  = 0
             
-            let date: NSDate = NSDate(timeIntervalSinceNow: ti)
+            // Start with 10ms time boxes
+            let ti: NSTimeInterval  = 2.0
             
-            // Let the current run-loop do it's magif for one time-box.
-            NSRunLoop.currentRunLoop().runMode(NSRunLoopCommonModes, beforeDate: date)
-            
-            // Double the time box, for next try, max out at 1000ms.
-            //ti = MIN(1.0, ti * 2);
-            count++
-            if (count>10) {
-                //FLOG(5, message: " given up waiting");
-                has_checked_cloud = true
-                icloud_file_exists = true
+            // Wait until delegate did callback
+            while (!has_checked_cloud) {
+                //FLOG(5, message: " has not checked iCloud yet, waiting")
+                
+                let date: NSDate = NSDate(timeIntervalSinceNow: ti)
+                
+                // Let the current run-loop do it's magif for one time-box.
+                NSRunLoop.currentRunLoop().runMode(NSRunLoopCommonModes, beforeDate: date)
+                
+                // Double the time box, for next try, max out at 1000ms.
+                //ti = MIN(1.0, ti * 2);
+                count++
+                if (count>10) {
+                    //FLOG(5, message: " given up waiting");
+                    has_checked_cloud = true
+                    icloud_file_exists = true
+                }
+                
             }
             
-        }
-        
-        if (has_checked_cloud) {
-            if (icloud_file_exists) {
-                //FLOG(5, message: " has checked iCloud, file exists");
-                has_checked_cloud = false
-                return true
+            if (has_checked_cloud) {
+                if (icloud_file_exists) {
+                    //FLOG(5, message: " has checked iCloud, file exists");
+                    has_checked_cloud = false
+                    return true
+                } else {
+                    //FLOG(5, message: " has checked iCloud, file does not exist");
+                    has_checked_cloud = false
+                    return false
+                }
             } else {
-                //FLOG(5, message: " has checked iCloud, file does not exist");
-                has_checked_cloud = false
+                //FLOG(5, message: " ERROR: has not checked iCloud yet");
                 return false
             }
-        } else {
-            //FLOG(5, message: " ERROR: has not checked iCloud yet");
-            return false
-        }
-#else
-        return self.icloud_file_exists
-#endif
+            #else
+            return self.icloud_file_exists
+        #endif
     }
     
     // Returns the local store options
@@ -1244,12 +1243,12 @@ class CoreDataStackManager: NSObject {
             }
             else {
                 FLOG(5, message: "Failed to backup store)")
-                            }
+            }
         } catch  {
             FLOG(5, message: "Failed to backup store)")
             
         }
-          return false
+        return false
     }
     /*! Creates a backup of the ICloud store
     @return Returns YES of file was migrated or NO if not.
@@ -1492,10 +1491,10 @@ class CoreDataStackManager: NSObject {
             try bgContext.save()
             
             FLOG(5, message: " Seed data loaded")
-
+            
             
         } catch {
-             FLOG(5, message: "  Unresolved error while saving")
+            FLOG(5, message: "  Unresolved error while saving")
         }
     }
     func insertNewWalletDetails(moc:NSManagedObjectContext, name:String)
@@ -1521,24 +1520,24 @@ class CoreDataStackManager: NSObject {
         }
         
     }
-#if os(iOS)
+    #if os(iOS)
     func insertCategory(moc:NSManagedObjectContext, entityName:String, sortIndex:Int, name:String, viewName:String, icon:UIImage?)
     {
-        //FLOG(5, message: " called")
+    //FLOG(5, message: " called")
     
-        if let newManagedObject:NSManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext:moc) {
+    if let newManagedObject:NSManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext:moc) {
     
-            newManagedObject.setValue(sortIndex, forKey:"sortIndex")
-            newManagedObject.setValue(name, forKey:"name")
-            newManagedObject.setValue(viewName, forKey:"viewName")
+    newManagedObject.setValue(sortIndex, forKey:"sortIndex")
+    newManagedObject.setValue(name, forKey:"name")
+    newManagedObject.setValue(viewName, forKey:"viewName")
     
-            if let ic = icon {
-                newManagedObject.setValue(UIImagePNGRepresentation(ic), forKey:"image")
-            }
-        }
+    if let ic = icon {
+    newManagedObject.setValue(UIImagePNGRepresentation(ic), forKey:"image")
+    }
+    }
     
     }
-#else
+    #else
     func insertCategory(moc:NSManagedObjectContext, entityName:String, sortIndex:Int, name:String, viewName:String, icon:NSImage?)
     {
         //FLOG(5, message: " called")
@@ -1571,7 +1570,9 @@ class CoreDataStackManager: NSObject {
         }
         return nil
     }
-#endif
+    #endif
+    
+    // MARK:  Core Data Notifications
     
     func postStoreChangedNotification() {
         NSOperationQueue.mainQueue().addOperationWithBlock( {
@@ -1607,11 +1608,11 @@ class CoreDataStackManager: NSObject {
             
             if let path = storeURL?.path {
                 
-                 FLOG(5, message: "  storeURL is \(path)")
+                FLOG(5, message: "  storeURL is \(path)")
                 
                 let fileExists: Bool = NSFileManager.defaultManager().fileExistsAtPath( path)
                 
-               FLOG(5, message: "  storeURL " + (fileExists ? "exists" : "does not exist"))
+                FLOG(5, message: "  storeURL " + (fileExists ? "exists" : "does not exist"))
                 
                 return fileExists
                 
@@ -1641,13 +1642,15 @@ class CoreDataStackManager: NSObject {
             
         })
     }
+    // MARK: Migration and Moving Files
+    
     /// This function will check if isICloudEnabled is true and if so then check if a local store file exists
     /// and migrate it to iCloud.  If an iCloud store already exists then the migration will fail and we should really send a message to the user indicating such.  We could remove what it there or we could merge with it!
     /// If isICloudEnabled is false then check if an iCloud file exists and migrate it to a local store
     /// Actually we should ask the user if they want to migrate it to a local store, particularly if it is a first
     /// installation.
     func migrateFilesIfRequired() {
-         FLOG(5, message: "migrateFilesIfRequired called...")
+        FLOG(5, message: "migrateFilesIfRequired called...")
         // Setting has changed to take the appropriate action
         
         if (isICloudEnabled) {
@@ -1794,44 +1797,49 @@ class CoreDataStackManager: NSObject {
             
             FLOG(5, message: " error migrating local file to iCloud because iCloud file already exists!");
             #if os(iOS)
-            
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
                 
-                /*
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    
+                    /*
+                    
+                    _cloudMergeChoiceAlert = [[UIAlertView alloc] initWithTitle:@"iCloud file exists" message:@"Do you want to merge the data on this device with the existing iCloud data?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+                    [_cloudMergeChoiceAlert show];
+                    */
+                    
+                }
+                #else
+                FLOG(5, message: " Warning migrating local file to iCloud but iCloud file already exists, choose an option!")
                 
-                _cloudMergeChoiceAlert = [[UIAlertView alloc] initWithTitle:@"iCloud file exists" message:@"Do you want to merge the data on this device with the existing iCloud data?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-                [_cloudMergeChoiceAlert show];
-                */
                 
-            }
-#else
-            FLOG(5, message: " Warning migrating local file to iCloud but iCloud file already exists, choose an option!")
+                let result = self.mergeWithICloudChoiceAlert()
+                
+                    
+                if result {
+                    FLOG(5, message: " user selected to merge with iCloud file")
+                    self.deregisterForStoreChanges()
+                    self.persistentStoreCoordinator = nil
+                    self.managedObjectContext = nil
+                    self.moveStoreToICloud()
+                    self.postStoreChangedNotification()
+                }
+                else {
+                    FLOG(5, message: " user selected to use iCloud file")
+                    self.deregisterForStoreChanges()
+                    self.persistentStoreCoordinator = nil
+                    self.managedObjectContext = nil
+                    self.storeURL = self.iCloudStoreURL()
+                    
+                    // Always make a backup of the local store before migrating to iCloud
+                    self.backupLocalStore()
+                    
+                    self.deleteLocalStore()
+                    self.postStoreChangedNotification()
+                }
+                
+            #endif
             
-            if self.mergeWithICloudChoiceAlert() {
-                FLOG(5, message: " user selected to merge with iCloud file")
-                self.deregisterForStoreChanges()
-                self.persistentStoreCoordinator = nil
-                self.managedObjectContext = nil
-                self.moveStoreToICloud()
-                self.postStoreChangedNotification()
-            }
-            else {
-                FLOG(5, message: " user selected to use iCloud file")
-                self.deregisterForStoreChanges()
-                self.persistentStoreCoordinator = nil
-                self.managedObjectContext = nil
-                self.storeURL = self.iCloudStoreURL()
-            
-                // Always make a backup of the local store before migrating to iCloud
-                self.backupLocalStore()
-            
-                self.deleteLocalStore()
-                self.postStoreChangedNotification()
-            }
-#endif
-    
             return false
-    
+            
         }
     }
     /*! Moves a local document to iCloud by migrating the existing store to iCloud and then removing the original store.
@@ -1938,7 +1946,7 @@ class CoreDataStackManager: NSObject {
         }
         
     }
-   
+    
     /*! Checks to see whether the user has previously selected the iCloud storage option, and if so then check
     whether the iCloud identity has changed (i.e. different iCloud account being used or logged out of iCloud).
     
@@ -1965,231 +1973,231 @@ class CoreDataStackManager: NSObject {
     //
     #if os(iOS)
     func performInitialisationChecks(completion:(()->Void)?) {
-        //FLOG(5, message: " called");
-        showBackgroundTaskActive()
-        
-        // Check if a backup has been requested and then backup current store
-        backupCurrentStore()
-        
-        if let strg = ubiquityContainerID {
-            
-            FLOG(5, message: " ubiquityContainerID is " + (strg as String))
-            
-        } else {
-            
-            FLOG(5, message: " ubiquityContainerID is nil")
-            
-        }
-        
-        if let currentToken: protocol<NSCoding, NSCopying, NSObjectProtocol>? = NSFileManager.defaultManager().ubiquityIdentityToken {
-            
-            FLOG(5, message: " ubiquityIdentityToken is \(currentToken)")
-            
+    //FLOG(5, message: " called");
+    showBackgroundTaskActive()
     
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+    // Check if a backup has been requested and then backup current store
+    backupCurrentStore()
     
-                if let url = self.iCloudCoreDataURL() {
-                    FLOG(5, message: " iCloud container is \(url.path)")
-                }
+    if let strg = ubiquityContainerID {
+    
+    FLOG(5, message: " ubiquityContainerID is " + (strg as String))
+    
+    } else {
+    
+    FLOG(5, message: " ubiquityContainerID is nil")
+    
+    }
+    
+    if let currentToken: protocol<NSCoding, NSCopying, NSObjectProtocol>? = NSFileManager.defaultManager().ubiquityIdentityToken {
+    
+    FLOG(5, message: " ubiquityIdentityToken is \(currentToken)")
     
     
-                for var i = 1; i<2; i++ {
-                    self.listAllICloudDocs()
-                    sleep(1)
-                }
-            })
-            
-            //FLOG(5, message: " iCloud is enabled");
-            
-            icloud_container_available = true
-            
-            if (isICloudEnabled) {
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(CDConstants.ICloudStateUpdatedNotification, object:nil)
-            }
-            
-        } else
-        {
-            
-            //FLOG(5, message: " iCloud is not enabled");
-            // If there is no token now, set our state to NO
-            icloud_container_available = false
-            //[self setIsCloudEnabled:NO];
-        }
-        
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        
-        var storagePreferenceSelected: Bool = false
-        
-        // Call this twice because sometimes the first call returns incorrect value!
-        let userICloudChoice = NSUserDefaults.standardUserDefaults().boolForKey(Constants.iCloudPreferenceKey)
-        
-        if let _ = NSUserDefaults.standardUserDefaults().stringForKey(Constants.iCloudPreferenceSelected) {
-            
-            //FLOG(5, message: " User preference for \(Constants.iCloudPreferenceKey) is " + (userICloudChoice ? "YES" : "NO"))
-            
-            storagePreferenceSelected = true
-            
-            if (userICloudChoice) {
-                
-                //FLOG(5, message: " User selected iCloud");
-                useICloudStorage = true
-                // Display notice if previous iCloud account is not available
-                self.checkUbiquitousTokenFromPreviousLaunch(NSFileManager.defaultManager().ubiquityIdentityToken)
-                
-            } else {
-                
-                //FLOG(5, message: " User disabled iCloud");
-                useICloudStorage = false
-                
-            }
-            
-        } else {
-            //FLOG(5, message: " User has not selected a storage preference")
-            storagePreferenceSelected = false
-            useICloudStorage = false
-        }
-        
-        
-        
-        // iCloud is active
-        if let _: protocol<NSCoding, NSCopying, NSObjectProtocol>? = NSFileManager.defaultManager().ubiquityIdentityToken {
-            
-            //FLOG(5, message: " iCloud is active");
-            
-            // If user has not yet set preference then prompt for them to select a preference
-            if (!storagePreferenceSelected) {
-                
-                //FLOG(5, message: " userICloudChoiceSet has not been set yet, so ask the user what they want to do");
-                isFirstInstall = true  // Set this so that if there are iCloud files we can ask if they should be migrated to
-                // the local store.
-                
-                // Use an Alert Controller with ActionSheet style
-                var popup: UIAlertController? = nil
-                popup = UIAlertController(title: "Choose Storage Option", message: "Should documents be stored in iCloud or on just this device?", preferredStyle: UIAlertControllerStyle.Alert)
-                
-                popup?.addAction(UIAlertAction(title: "Local only", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
-                    
-                    //FLOG(5, message: " user selected local files");
-                    NSUserDefaults.standardUserDefaults().setBool(false, forKey:Constants.iCloudPreferenceKey)
-                    NSUserDefaults.standardUserDefaults().setValue("YES", forKey:Constants.iCloudPreferenceSelected)
-                    self.useICloudStorage = false
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    
-                    self.setIsCloudEnabled(false)
-                    // EXIT POINT so run the completion handler
-                    if (completion != nil) {
-                        NSOperationQueue.mainQueue().addOperationWithBlock {
-                            completion!()
-                        }
-                    }
-                }))
-                popup?.addAction(UIAlertAction(title: "iCloud", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
-                    
-                    //FLOG(5, message: " user selected iCloud files");
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.iCloudPreferenceKey )
-                    
-                    NSUserDefaults.standardUserDefaults().setValue("YES", forKey:Constants.iCloudPreferenceSelected)
-                    
-                    self.useICloudStorage = true
-                    
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    
-                    // Now ask about seed data
-                    self.promptUserAboutSeedData({
-                        self.setIsCloudEnabled(true)
-                        // EXIT POINT so run the completion handler
-                        if (completion != nil) {
-                            NSOperationQueue.mainQueue().addOperationWithBlock {
-                                completion!()
-                            }
-                        }
-                    })
-                    
-                    
-                    
-                }))
-                
-                if (popup != nil) {
-                    
-                    // Present this in the center
-                    
-                    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
-                        
-                        
-                        if let view:UIView = UIApplication.sharedApplication().keyWindow?.subviews.last {
-                            
-                            popup?.popoverPresentationController?.sourceView = view
-                            
-                            // The completion block below gets called as soon as presentation
-                            // is done but does not wait for user to select an action
-                            controller.presentViewController(popup!, animated: true, completion: nil)
-                            return
-                        }
-                    }
-                    
-                }
-            }
-            else {
-                //FLOG(5, message: " userICloudChoiceSet is set");
-                if (userICloudChoice) {
-                    //FLOG(5, message: " userICloudChoice is YES");
-                    // iCloud is available and user has selected to use it
-                    // Check if any local files need to be migrated to iCloud
-                    // and migrate them
-                    setIsCloudEnabled(true)
-                    
-                } else  {
-                    //FLOG(5, message: " userICloudChoice is NO");
-                    // iCloud is available but user has chosen to NOT Use iCloud
-                    // Check that NO local file exists already
-                    if (!localStoreExists()) {
-                        
-                        // and IF an iCloud file exists
-                        if (iCloudStoreExists()) {
-                            //FLOG(5, message: " iCloudStoreExists exists")
-                            
-                            //  Ask the user if they want to migrate the iCloud file to a local file
-                            // EXIT POINT so pass in completion block
-                            promptUserAboutICloudDocumentStorage(completion)
-                            return
-                        } else {
-                            // And because no local file exists already this must the the first time therefor we need to load seed data
-                            load_seed_data = true
-                            
-                            // Otherwise just set iCloud enabled
-                            setIsCloudEnabled(false)
-                        }
-                    } else {
-                        // A Local file already exists so what to do ?
-                        // Just tell the user a file has been detected in iCloud
-                        // and ask if they want to start using the iCloud file
-                        setIsCloudEnabled(false)
-                    }
-                }
-            }
-        }
-        else {
-            //FLOG(5, message: " iCloud is not active");
-            setIsCloudEnabled(false)
-            useICloudStorage = false
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey:Constants.iCloudPreferenceKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            // Since the user is signed out of iCloud, reset the preference to not use iCloud, so if they sign in again we will prompt them to move data
-            NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.iCloudPreferenceSelected)
-        }
-        storeCurrentUbiquityToken()
-        
-        // EXIT POINT so run the completion handler
-        if (completion != nil) {
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                completion!()
-            }
-        }
-        
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+    
+    if let url = self.iCloudCoreDataURL() {
+    FLOG(5, message: " iCloud container is \(url.path)")
+    }
+    
+    
+    for var i = 1; i<2; i++ {
+    self.listAllICloudDocs()
+    sleep(1)
+    }
+    })
+    
+    //FLOG(5, message: " iCloud is enabled");
+    
+    icloud_container_available = true
+    
+    if (isICloudEnabled) {
+    
+    NSNotificationCenter.defaultCenter().postNotificationName(CDConstants.ICloudStateUpdatedNotification, object:nil)
+    }
+    
+    } else
+    {
+    
+    //FLOG(5, message: " iCloud is not enabled");
+    // If there is no token now, set our state to NO
+    icloud_container_available = false
+    //[self setIsCloudEnabled:NO];
+    }
+    
+    NSUserDefaults.standardUserDefaults().synchronize()
+    
+    
+    var storagePreferenceSelected: Bool = false
+    
+    // Call this twice because sometimes the first call returns incorrect value!
+    let userICloudChoice = NSUserDefaults.standardUserDefaults().boolForKey(Constants.iCloudPreferenceKey)
+    
+    if let _ = NSUserDefaults.standardUserDefaults().stringForKey(Constants.iCloudPreferenceSelected) {
+    
+    //FLOG(5, message: " User preference for \(Constants.iCloudPreferenceKey) is " + (userICloudChoice ? "YES" : "NO"))
+    
+    storagePreferenceSelected = true
+    
+    if (userICloudChoice) {
+    
+    //FLOG(5, message: " User selected iCloud");
+    useICloudStorage = true
+    // Display notice if previous iCloud account is not available
+    self.checkUbiquitousTokenFromPreviousLaunch(NSFileManager.defaultManager().ubiquityIdentityToken)
+    
+    } else {
+    
+    //FLOG(5, message: " User disabled iCloud");
+    useICloudStorage = false
+    
+    }
+    
+    } else {
+    //FLOG(5, message: " User has not selected a storage preference")
+    storagePreferenceSelected = false
+    useICloudStorage = false
+    }
+    
+    
+    
+    // iCloud is active
+    if let _: protocol<NSCoding, NSCopying, NSObjectProtocol>? = NSFileManager.defaultManager().ubiquityIdentityToken {
+    
+    //FLOG(5, message: " iCloud is active");
+    
+    // If user has not yet set preference then prompt for them to select a preference
+    if (!storagePreferenceSelected) {
+    
+    //FLOG(5, message: " userICloudChoiceSet has not been set yet, so ask the user what they want to do");
+    isFirstInstall = true  // Set this so that if there are iCloud files we can ask if they should be migrated to
+    // the local store.
+    
+    // Use an Alert Controller with ActionSheet style
+    var popup: UIAlertController? = nil
+    popup = UIAlertController(title: "Choose Storage Option", message: "Should documents be stored in iCloud or on just this device?", preferredStyle: UIAlertControllerStyle.Alert)
+    
+    popup?.addAction(UIAlertAction(title: "Local only", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+    
+    //FLOG(5, message: " user selected local files");
+    NSUserDefaults.standardUserDefaults().setBool(false, forKey:Constants.iCloudPreferenceKey)
+    NSUserDefaults.standardUserDefaults().setValue("YES", forKey:Constants.iCloudPreferenceSelected)
+    self.useICloudStorage = false
+    NSUserDefaults.standardUserDefaults().synchronize()
+    
+    self.setIsCloudEnabled(false)
+    // EXIT POINT so run the completion handler
+    if (completion != nil) {
+    NSOperationQueue.mainQueue().addOperationWithBlock {
+    completion!()
+    }
+    }
+    }))
+    popup?.addAction(UIAlertAction(title: "iCloud", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+    
+    //FLOG(5, message: " user selected iCloud files");
+    NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.iCloudPreferenceKey )
+    
+    NSUserDefaults.standardUserDefaults().setValue("YES", forKey:Constants.iCloudPreferenceSelected)
+    
+    self.useICloudStorage = true
+    
+    NSUserDefaults.standardUserDefaults().synchronize()
+    
+    // Now ask about seed data
+    self.promptUserAboutSeedData({
+    self.setIsCloudEnabled(true)
+    // EXIT POINT so run the completion handler
+    if (completion != nil) {
+    NSOperationQueue.mainQueue().addOperationWithBlock {
+    completion!()
+    }
+    }
+    })
+    
+    
+    
+    }))
+    
+    if (popup != nil) {
+    
+    // Present this in the center
+    
+    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
+    
+    
+    if let view:UIView = UIApplication.sharedApplication().keyWindow?.subviews.last {
+    
+    popup?.popoverPresentationController?.sourceView = view
+    
+    // The completion block below gets called as soon as presentation
+    // is done but does not wait for user to select an action
+    controller.presentViewController(popup!, animated: true, completion: nil)
+    return
+    }
+    }
+    
+    }
+    }
+    else {
+    //FLOG(5, message: " userICloudChoiceSet is set");
+    if (userICloudChoice) {
+    //FLOG(5, message: " userICloudChoice is YES");
+    // iCloud is available and user has selected to use it
+    // Check if any local files need to be migrated to iCloud
+    // and migrate them
+    setIsCloudEnabled(true)
+    
+    } else  {
+    //FLOG(5, message: " userICloudChoice is NO");
+    // iCloud is available but user has chosen to NOT Use iCloud
+    // Check that NO local file exists already
+    if (!localStoreExists()) {
+    
+    // and IF an iCloud file exists
+    if (iCloudStoreExists()) {
+    //FLOG(5, message: " iCloudStoreExists exists")
+    
+    //  Ask the user if they want to migrate the iCloud file to a local file
+    // EXIT POINT so pass in completion block
+    promptUserAboutICloudDocumentStorage(completion)
+    return
+    } else {
+    // And because no local file exists already this must the the first time therefor we need to load seed data
+    load_seed_data = true
+    
+    // Otherwise just set iCloud enabled
+    setIsCloudEnabled(false)
+    }
+    } else {
+    // A Local file already exists so what to do ?
+    // Just tell the user a file has been detected in iCloud
+    // and ask if they want to start using the iCloud file
+    setIsCloudEnabled(false)
+    }
+    }
+    }
+    }
+    else {
+    //FLOG(5, message: " iCloud is not active");
+    setIsCloudEnabled(false)
+    useICloudStorage = false
+    NSUserDefaults.standardUserDefaults().setBool(false, forKey:Constants.iCloudPreferenceKey)
+    NSUserDefaults.standardUserDefaults().synchronize()
+    
+    // Since the user is signed out of iCloud, reset the preference to not use iCloud, so if they sign in again we will prompt them to move data
+    NSUserDefaults.standardUserDefaults().removeObjectForKey(Constants.iCloudPreferenceSelected)
+    }
+    storeCurrentUbiquityToken()
+    
+    // EXIT POINT so run the completion handler
+    if (completion != nil) {
+    NSOperationQueue.mainQueue().addOperationWithBlock {
+    completion!()
+    }
+    }
+    
     }
     #else
     func performInitialisationChecks(completion:(()->Void)?) {
@@ -2299,6 +2307,7 @@ class CoreDataStackManager: NSObject {
                 
                 // Use an Alert Controller with ActionSheet style
                 let res = self.cloudChoiceAlert()
+                
                 self.setICloudPreference(res)
                 
             }
@@ -2323,6 +2332,7 @@ class CoreDataStackManager: NSObject {
                             
                             //  Ask the user if they want to migrate the iCloud file to a local file
                             let res = self.promptUserAboutICloudDocumentStorage()
+                            
                             if (res == CDConstants.KeepStore) {
                                 FLOG(5, message: " 'Keep using iCloud' selected")
                                 FLOG(5, message: " turn Use iCloud back ON")
@@ -2390,7 +2400,7 @@ class CoreDataStackManager: NSObject {
         
     }
     
-#endif
+    #endif
     /// This function sets the users 'Use iCloud' preference and then calls SetIsICloudEnabled(pref)
     /// in order to setup the appropriate loca or Core Data store.
     /// If this is resulting in a change to the existing settings then a migration may be required
@@ -2405,6 +2415,8 @@ class CoreDataStackManager: NSObject {
         
         self.setIsCloudEnabled(pref)
     }
+    
+    // MARK: Register and Deregister for Store Changes
     // We only care if the one we have open is changing
     func registerForStoreChanges(storeCoordinator: NSPersistentStoreCoordinator) {
         
@@ -2545,26 +2557,48 @@ class CoreDataStackManager: NSObject {
     // NB - this may be called from a background thread so make sure we run on the main thread !!
     // This is when transactoin logs are loaded
     func storesDidImport(notification: NSNotification!) {
-        //FLOG(5, message: "storesDidImport ");
+        FLOG(5, message: "storesDidImport ");
         
         NSOperationQueue.mainQueue().addOperationWithBlock {
-            //FLOG(5, message: "  merge changes");
-            /* Process new/changed objects here and remove any unwanted items or duplicates prior to merging with current context
+            FLOG(5, message: "  merge changes");
+            // Process new/changed objects here and remove any unwanted items or duplicates prior to merging with current context
             //
-            NSSet *updatedObjectIDs = [[notification userInfo] objectForKey:NSUpdatedObjectsKey];
-            NSSet *insertedObjectIDs = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
-            NSSet *deletedObjectIDs = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
+            if let updatedObjectIDs = notification.userInfo?[NSUpdatedObjectsKey] as? NSSet {
+                
+                for managedObjectID in updatedObjectIDs {
+                    let managedObject = self.managedObjectContext!.objectWithID(managedObjectID as! NSManagedObjectID)
+                    
+                    let name = managedObject.valueForKey("displayName")
+                    FLOG(0, message: "Updated: \(name)")
+                }
+                
+            }
+            if let insertedObjectIDs = notification.userInfo?[NSInsertedObjectsKey] as? NSSet  {
+                for managedObjectID in insertedObjectIDs {
+                    let managedObject = self.managedObjectContext!.objectWithID(managedObjectID as! NSManagedObjectID)
+                    
+                    let name = managedObject.valueForKey("displayName")
+                    FLOG(0, message: "Updated: \(name)")
+                }
+            }
+            if let deletedObjectIDs = notification.userInfo?[NSDeletedObjectsKey] as? NSSet  {
+                for managedObjectID in deletedObjectIDs {
+                    let managedObject = self.managedObjectContext!.objectWithID(managedObjectID as! NSManagedObjectID)
+                    
+                    let name = managedObject.valueForKey("displayName")
+                    FLOG(0, message: "Updated: \(name)")
+                }
+            }
+            
             
             // Iterate over all the new, changed or deleted ManagedObjectIDs and get the NSManagedObject for the corresponding ID:
             // These come from another thread so we can't reference the objects directly
             
-            for(NSManagedObjectID *managedObjectID in updatedObjectIDs){
-            NSManagedObject *managedObject = [_managedObjectContext objectWithID:managedObjectID];
-            }
+            
             
             // Check is some object is equal to an inserted or updated object
-            if([myEntity.objectID isEqual:managedObject.objectID]){}
-            */
+            //if([myEntity.objectID isEqual:managedObject.objectID]){}
+            
             
             if let moc = self.managedObjectContext {
                 //for(NSManagedObject *object in [[notification userInfo] objectForKey:NSUpdatedObjectsKey]) {
@@ -3806,6 +3840,9 @@ class CoreDataStackManager: NSObject {
     
     }
     
+    NSOperationQueue.mainQueue().addOperationWithBlock {
+    
+    
     // Use an Alert Controller with ActionSheet style
     var popup: UIAlertController? = nil
     popup = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -3875,6 +3912,7 @@ class CoreDataStackManager: NSObject {
     }
     
     }
+    }
     // This is an EXIT POINT for checkUserICloudPreferenceAndSetupIfNecessary
     // So we much call any passed in completion block
     func promptUserAboutSeedData(completion:(()->Void)?) {
@@ -3888,6 +3926,8 @@ class CoreDataStackManager: NSObject {
     message = "Have you already shared Info on iCloud from another device?"
     option1 = "Yes, Info is already shared in iCloud"
     option2 = "No, Info is not already shared in iCloud"
+    
+    NSOperationQueue.mainQueue().addOperationWithBlock {
     
     // Use an Alert Controller with ActionSheet style
     var popup: UIAlertController? = nil
@@ -3933,7 +3973,7 @@ class CoreDataStackManager: NSObject {
     }
     
     }
-    
+    }
     }
     #else
     /// DELEGATE METHODS!
@@ -3949,14 +3989,22 @@ class CoreDataStackManager: NSObject {
         let icloudButton = NSLocalizedString("Keep using iCloud", comment: "iCloud button title")
         let keepButton = NSLocalizedString("Move to my Mac", comment: "Keep button title")
         let deleteButton = NSLocalizedString("Delete from my Mac", comment: "Keep button title")
-        let alert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = info
-        alert.addButtonWithTitle(icloudButton)
-        alert.addButtonWithTitle(keepButton)
-        alert.addButtonWithTitle(deleteButton)
         
-        let answer = alert.runModal()
+        
+        var answer = NSAlertFirstButtonReturn
+        
+        dispatch_sync(dispatch_get_main_queue(), {
+            
+            let alert = NSAlert()
+            alert.messageText = question
+            alert.informativeText = info
+            alert.addButtonWithTitle(icloudButton)
+            alert.addButtonWithTitle(keepButton)
+            alert.addButtonWithTitle(deleteButton)
+        
+            answer = alert.runModal()
+            
+        })
         
         if (answer == NSAlertFirstButtonReturn) {
             return CDConstants.KeepStore
@@ -3977,13 +4025,21 @@ class CoreDataStackManager: NSObject {
         let info = NSLocalizedString("Choose a storage option", comment: "Choose Storage Option info")
         let mergeButton = NSLocalizedString("Merge data", comment: "Merge button title")
         let icloudButton = NSLocalizedString("Use the iCloud data", comment: "iCloud button title")
-        let alert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = info
-        alert.addButtonWithTitle(mergeButton)
-        alert.addButtonWithTitle(icloudButton)
         
-        let answer = alert.runModal()
+        
+        var answer = NSAlertFirstButtonReturn
+        
+        dispatch_sync(dispatch_get_main_queue(), {
+        
+            let alert = NSAlert()
+            alert.messageText = question
+            alert.informativeText = info
+            alert.addButtonWithTitle(mergeButton)
+            alert.addButtonWithTitle(icloudButton)
+        
+            answer = alert.runModal()
+            
+        })
         
         if (answer == NSAlertFirstButtonReturn) {
             return true
@@ -4000,13 +4056,20 @@ class CoreDataStackManager: NSObject {
         let info = NSLocalizedString("Choose a storage option", comment: "Choose Storage Option info");
         let localButton = NSLocalizedString("Local only", comment: "Local only button title");
         let icloudButton = NSLocalizedString("iCloud", comment: "iCloud button title");
-        let alert = NSAlert()
-        alert.messageText = question
-        alert.informativeText = info
-        alert.addButtonWithTitle(localButton)
-        alert.addButtonWithTitle(icloudButton)
         
-        let answer = alert.runModal()
+        var answer = NSAlertFirstButtonReturn
+        
+        dispatch_sync(dispatch_get_main_queue(), {
+            
+            let alert = NSAlert()
+            alert.messageText = question
+            alert.informativeText = info
+            alert.addButtonWithTitle(localButton)
+            alert.addButtonWithTitle(icloudButton)
+        
+            answer = alert.runModal()
+            
+        })
         
         if (answer == NSAlertFirstButtonReturn) {
             // Set the preference
