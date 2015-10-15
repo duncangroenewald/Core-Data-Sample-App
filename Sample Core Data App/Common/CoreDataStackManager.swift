@@ -2124,12 +2124,14 @@ class CoreDataStackManager: NSObject {
     
     // Present this in the center
     
-    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
+    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController {
     
     
     if let view:UIView = UIApplication.sharedApplication().keyWindow?.subviews.last {
     
     popup?.popoverPresentationController?.sourceView = view
+        
+        
     
     // The completion block below gets called as soon as presentation
     // is done but does not wait for user to select an action
@@ -3898,7 +3900,7 @@ class CoreDataStackManager: NSObject {
     
     // Present this in the center
     
-    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
+    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController {
     
     
     if let view:UIView = UIApplication.sharedApplication().keyWindow?.subviews.last {
@@ -3961,7 +3963,7 @@ class CoreDataStackManager: NSObject {
     
     // Present this in the center
     
-    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController {
+    if let controller = UIApplication.sharedApplication().keyWindow?.rootViewController?.presentedViewController {
     
     
     if let view:UIView = UIApplication.sharedApplication().keyWindow?.subviews.last {
